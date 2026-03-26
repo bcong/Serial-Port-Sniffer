@@ -1,0 +1,74 @@
+{
+    // ── 에디터 공통 ───────────────────────────────────
+    "editor.formatOnSave": true,
+    "files.autoSave": "afterDelay",
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "workbench.editor.enablePreview": false,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "explicit",
+        "source.organizeImports": "never"
+    },
+
+    // ── Prettier ──────────────────────────────────────
+    "prettier.printWidth": 120,
+    "prettier.tabWidth": 4,
+    "prettier.trailingComma": "all",
+    "vs-code-prettier-eslint.prettierLast": true,
+    "notebook.defaultFormatter": "esbenp.prettier-vscode",
+
+    // ── ESLint ────────────────────────────────────────
+    "eslint.format.enable": true,
+    "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+
+    // ── TypeScript / JavaScript ───────────────────────
+    "typescript.suggest.autoImports": true,
+    "typescript.preferences.includePackageJsonAutoImports": "auto",
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "typescript.preferences.organizeImportsOnFileMove": "prompt",
+    "typescript.preferences.jsxAttributeCompletionStyle": "braces",
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "javascript.preferences.jsxAttributeCompletionStyle": "braces",
+
+    // ── Go ────────────────────────────────────────────
+    // gopls 에 GOWORK 위치를 명시 → go.work 인식 보장 (Ctrl+클릭 로컬 파일 이동)
+    // ${workspaceFolder} 를 사용하므로 어떤 컴퓨터에서 열어도 경로 자동 결정
+    "go.toolsEnvVars": {
+        "GOWORK": "${workspaceFolder}/go.work",
+        "GOPRIVATE": "weko_iot"
+    },
+
+    // ── Go 언어 설정 ─────────────────────────────────
+    // 저장 시 import 자동 정리 (미사용 제거 + 경로 정렬)
+    "[go]": {
+        "editor.defaultFormatter": "golang.go",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "explicit"
+        }
+    },
+
+    // gopls (Go 언어 서버) 설정
+    "go.useLanguageServer": true,
+    "gopls": {
+        "ui.completion.usePlaceholders": true,
+        "ui.semanticTokens": true,
+        "ui.diagnostic.staticcheck": true,
+        "analyses": {
+            "ST1000": false
+        }
+    },
+
+    // go.lintTool 은 gopls 내장 staticcheck 와 중복되므로 비활성화
+    "go.lintOnSave": "off",
+    "go.vetOnSave": "package",
+
+    // 테스트 타임아웃
+    "go.testTimeout": "30s",
+
+    // 인레이 힌트 (변수 타입, 파라미터명 표시)
+    "go.inlayHints.assignVariableTypes": true,
+    "go.inlayHints.compositeLiteralFields": true,
+    "go.inlayHints.functionTypeParameters": true,
+    "go.inlayHints.parameterNames": true,
+    "go.inlayHints.rangeVariableTypes": true
+}
