@@ -1,19 +1,29 @@
 {
-  "extends": "@electron-toolkit/tsconfig/tsconfig.web.json",
-  "include": [
-    "src/renderer/src/env.d.ts",
-    "src/renderer/src/**/*",
-    "src/renderer/src/**/*.tsx",
-    "src/preload/*.d.ts"
-  ],
-  "compilerOptions": {
-    "composite": true,
-    "jsx": "react-jsx",
-    "baseUrl": ".",
-    "paths": {
-      "@renderer/*": [
-        "src/renderer/src/*"
-      ]
+    "extends": "@electron-toolkit/tsconfig/tsconfig.web.json",
+    "include": [
+        "src/preload/index.d.ts",
+        "src/renderer/src/env.d.ts",
+        "src/renderer/src/**/*",
+        "src/renderer/src/**/*.tsx",
+        "src/utils/**/*",
+        "src/@types/**/*"
+    ],
+    "compilerOptions": {
+        "jsx": "react-jsx",
+        "composite": true,
+        "noUnusedLocals": false, // 안쓰는 로컬 변수 체크
+        "noUnusedParameters": false, // 함수 파라미터 중 안쓰는 것 체크
+        "experimentalDecorators": false, // 반드시 비활성화
+        "useDefineForClassFields": true,
+        "paths": {
+            "@Renderer/*": ["./src/renderer/src/*"],
+            "@Types/*": ["./src/@types/*"],
+            "@Utils/*": ["./src/renderer/src/Utils/*"],
+            "@Views/*": ["./src/renderer/src/Views/*"],
+            "@Templates/*": ["./src/renderer/src/Templates/*"],
+            "@Components/*": ["./src/renderer/src/Components/*"],
+            "@Stores/*": ["./src/renderer/src/Stores/*"],
+            "@Assets/*": ["./src/renderer/src/Assets/*"]
+        }
     }
-  }
 }

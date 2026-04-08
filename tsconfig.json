@@ -1,4 +1,16 @@
 {
-  "files": [],
-  "references": [{ "path": "./tsconfig.node.json" }, { "path": "./tsconfig.web.json" }]
+    "include": [
+        "electron.vite.config.ts",
+    ],
+    "references": [
+        {
+            "path": "./tsconfig.node.json"
+        },
+        {
+            "path": "./tsconfig.web.json"
+        },
+        {
+            "path": "./tsconfig.preload.json"
+        },
+    ],
 }

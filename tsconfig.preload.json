@@ -1,0 +1,10 @@
+{
+    "extends": "@electron-toolkit/tsconfig/tsconfig.node.json",
+    "include": ["src/preload/**/*", "src/@types/global.d.ts"],
+    "compilerOptions": {
+        "composite": true,
+        "noUnusedLocals": false, // 안쓰는 로컬 변수 체크
+        "noUnusedParameters": false, // 함수 파라미터 중 안쓰는 것 체크
+        "types": ["electron-vite/node"]
+    }
+}

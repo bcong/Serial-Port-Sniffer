@@ -5,19 +5,66 @@
     "main": "./out/main/index.js",
     "author": "GyeongSeop KIM",
     "scripts": {
-        "format": "prettier --write .",
-        "lint": "eslint --cache .",
+        "32": "yarn build && electron-builder --linux --armv7l",
+        "linux": "yarn build && electron-builder --linux --arm64",
+        "win": "yarn build && electron-builder --win",
         "typecheck:node": "tsc --noEmit -p tsconfig.node.json --composite false",
         "typecheck:web": "tsc --noEmit -p tsconfig.web.json --composite false",
-        "typecheck": "npm run typecheck:node && npm run typecheck:web",
-        "start": "electron-vite preview",
-        "dev": "electron-vite dev",
-        "build": "npm run typecheck && electron-vite build",
-        "postinstall": "electron-builder install-app-deps",
-        "build:unpack": "npm run build && electron-builder --dir",
-        "build:win": "npm run build && electron-builder --win",
-        "build:mac": "electron-vite build && electron-builder --mac",
-        "build:linux": "electron-vite build && electron-builder --linux"
+        "typecheck:preload": "tsc --noEmit -p tsconfig.preload.json --composite false",
+        "typecheck": "concurrently \"yarn typecheck:node\" \"yarn typecheck:web\" \"yarn typecheck:preload\"",
+        "build": "yarn typecheck && electron-vite build",
+        "dev": "electron-vite dev --watch",
+        "docker_dev": "ELECTRON_ENABLE_SANDBOX=0 npx electron-vite dev --watch -- --no-sandbox",
+        "re": "npx @electron/rebuild -f",
+        "clean": "tsc --build --clean",
+        "lint:fix": "eslint . --fix",
+        "serialport": "(cd node_modules/@serialport/bindings-cpp && node-gyp configure build)"
+    },
+    "build": {
+        "productName": "SerialPortSniffer",
+        "appId": "kr.com.sniffer.serialportsniffer",
+        "copyright": "Copyright © 2026 ${author}",
+        "asar": true,
+        "npmRebuild": false,
+        "nodeGypRebuild": false,
+        "compression": "store",
+        "nativeRebuilder": "parallel",
+        "directories": {
+            "output": "dist",
+            "app": "."
+        },
+        "nsis": {
+            "oneClick": true,
+            "allowToChangeInstallationDirectory": false,
+            "perMachine": false,
+            "removeDefaultUninstallWelcomePage": true,
+            "deleteAppDataOnUninstall": true,
+            "runAfterFinish": true
+        },
+        "win": {
+            "artifactName": "${productName}-${version}-${arch}.${ext}",
+            "target": [
+                {
+                    "target": "nsis",
+                    "arch": [
+                        "x64"
+                    ]
+                }
+            ]
+        },
+        "linux": {
+            "artifactName": "${productName}-${version}-${arch}.${ext}",
+            "target": {
+                "target": "appimage"
+            }
+        },
+        "extraResources": [
+            "./resources/**/*"
+        ],
+        "files": [
+            "!.vscode${/*}",
+            "out/**/*"
+        ]
     },
     "dependencies": {
         "@electron-toolkit/preload": "^3.0.2",
@@ -32,6 +79,7 @@
         "@types/react": "^19.2.7",
         "@types/react-dom": "^19.2.3",
         "@vitejs/plugin-react": "^5.1.1",
+        "concurrently": "^9.2.1",
         "electron": "^39.2.6",
         "electron-builder": "^26.0.12",
         "electron-vite": "^5.0.0",

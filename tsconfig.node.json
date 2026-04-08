@@ -1,8 +1,17 @@
 {
-  "extends": "@electron-toolkit/tsconfig/tsconfig.node.json",
-  "include": ["electron.vite.config.*", "src/main/**/*", "src/preload/**/*"],
-  "compilerOptions": {
-    "composite": true,
-    "types": ["electron-vite/node"]
-  }
+    "extends": "@electron-toolkit/tsconfig/tsconfig.node.json",
+    "include": ["electron.vite.config.*", "src/main/**/*", "src/preload/**/*", "src/utils/**/*", "src/@types/**/*"],
+    "compilerOptions": {
+        "target": "ES2024",
+        "composite": true,
+        "noUnusedLocals": false, // 안쓰는 로컬 변수 체크
+        "noUnusedParameters": false, // 함수 파라미터 중 안쓰는 것 체크
+        "types": ["electron-vite/node"],
+        "paths": {
+            "@Types/*": ["./src/@types/*"],
+            "@Utils/*": ["./src/main/Electron/Utils/*"],
+            "@Setting/*": ["./src/main/Electron/Setting/*"],
+            "@App/*": ["./src/main/Electron/*"]
+        }
+    }
 }
